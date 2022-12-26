@@ -1,22 +1,19 @@
 <template>
   <div id="app">
     <HelloWorld msg="Formulario desafio 3" />
-    <formulario-componente @enviar="datos.push($event)" />
-    <tabla-formulario :datos="datos"/>
+      <formulario-componente />
   </div>
 </template>
 
 <script>
-import FormularioComponente from './components/FormularioComponente.vue'
-import TablaFormulario from './components/TablaFormulario.vue'
-import HelloWorld from './components/HelloWorld.vue'
+import FormularioComponente from '../components/FormularioComponente.vue'
+import HelloWorld from '../components/HelloWorld.vue'
 
 export default {
-  name: 'App',
+  name: 'HomeView',
   components: {
     HelloWorld,
     FormularioComponente,
-    TablaFormulario
   },
   data() {
     return {
@@ -33,4 +30,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+
 </style>
+
+

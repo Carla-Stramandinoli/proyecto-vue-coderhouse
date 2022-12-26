@@ -58,6 +58,8 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { extend } from 'vee-validate';
 import { required, email, alpha, digits, numeric } from 'vee-validate/dist/rules';
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 
 extend('email', email);
 
@@ -103,14 +105,28 @@ export default {
         }
     },
     methods: {
+        ...mapMutations('moduloUsuarios',['guardarNombreFormPosteado']),
         validarFormulario() {
-            console.log('validarFormulario');
-            console.log(this);
-            console.log(this.$data);
-            this.$emit("enviar", this.$data.datos);
             alert("Formulario enviado!");
+            const newUsuario = {
+                name: this.datos.nombre,
+                age: this.datos.edad,
+                mail: this.datos.email,
+                phone: this.datos.telefono
+            }
+            const URLPOST = "https://639f79eb5eb8889197fd60c9.mockapi.io/formulario";
+            const request = axios({
+                method: "POST",
+                url: URLPOST,
+                data: newUsuario,
+            })
+            let thisComponente = this;
+            request.then(function (response) {
+                console.log(response.data);
+                thisComponente.guardarNombreFormPosteado(newUsuario.name);
+                thisComponente.$router.push('/form');
+             });
             setTimeout(() => {
-                document.getElementById("formulario").reset();
                 Object.assign(this.$data, this.$options.data());
             }, 2000);
         }
@@ -144,7 +160,6 @@ input {
     height: 7%;
     border-color: #0f467a;
     margin: 0px 0px -10px 0px;
-
 }
 
 .btn-style {
